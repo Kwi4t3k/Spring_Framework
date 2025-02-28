@@ -46,20 +46,28 @@ public class VehicleRepository implements IVehicleRepository {
 
     @Override
     public void save() {
-        try (FileWriter writer = new FileWriter(pathToFile)) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToFile))) {
             for (Vehicle vehicle : vehicles) {
                 writer.write(vehicle.toCSV());
-                writer.write("\n");
+                writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Plik sie nie zapisal " + e.getMessage());
         }
     }
 
     @Override
     public void load() {
         File file = new File(pathToFile);
-        if (!file.exists()) return;
+        try {
+            if (!file.exists()) {
+                if (file.createNewFile()) {
+                    System.out.println("Plik sie zrobił");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Plik sie nie zrobił");
+        }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
