@@ -16,6 +16,10 @@ public abstract class Vehicle {
         this.id = id;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public abstract String toCSV();
 
     @Override

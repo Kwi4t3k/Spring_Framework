@@ -8,11 +8,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Wypożyczalnia pojazdów\n");
-            System.out.println("1 - Wyświetl dostępne pojazdy\n");
-            System.out.println("2 - Wypożycz pojazd\n");
-            System.out.println("3 - Zwróć pojazd\n");
-            System.out.println("4 - Wyjście\n");
+            System.out.println("\nWypożyczalnia pojazdów\n");
+            System.out.println("1 - Wyświetl dostępne pojazdy");
+            System.out.println("2 - Wyświetl wypożyczone pojazdy");
+            System.out.println("3 - Wypożycz pojazd");
+            System.out.println("4 - Zwróć pojazd");
+            System.out.println("5 - Wyjście\n");
             System.out.print("Wybierz opcję:");
 
             int wybor = scanner.nextInt();
@@ -30,10 +31,21 @@ public class Main {
                     System.out.println("Brak pojazdów\n");
                 }
             } else if (wybor == 2) {
-                vehicleRepository.rentVehicle(scanner.nextLine());
+                boolean ok = false;
+                for (Vehicle vehicle : vehicleRepository.getVehicles()) {
+                    if (vehicle.rented) {
+                        System.out.println(vehicle);
+                        ok = true;
+                    }
+                }
+                if (!ok) {
+                    System.out.println("Brak pojazdów\n");
+                }
             } else if (wybor == 3) {
-                vehicleRepository.returnVehicle(scanner.nextLine());
+                vehicleRepository.rentVehicle(scanner.nextLine());
             } else if (wybor == 4) {
+                vehicleRepository.returnVehicle(scanner.nextLine());
+            } else if (wybor == 5) {
                 System.out.println("Do widzenia");
                 scanner.close();
                 return;
